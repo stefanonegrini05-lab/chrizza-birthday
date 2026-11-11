@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Patatina ❤️</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:linear-gradient(140deg,#fff0f5,#fbd9e6,#fff7f9);
+ color:#854b62;font-family:Georgia,serif;text-align:center;
+}
+section{
+ min-height:100vh;padding:55px 20px;display:none;
+ flex-direction:column;align-items:center;justify-content:center;
+}
+section.active{display:flex}
+h1{font-size:clamp(35px,9vw,55px);margin:12px}
+h2{font-size:29px}
+p{font-size:17px;line-height:1.8}
+button{
+ border:0;border-radius:30px;background:#c96d8c;color:white;
+ padding:14px 23px;font-size:16px;margin:8px;cursor:pointer;
+ box-shadow:0 5px 14px #b66a8533;
+}
+button:active{transform:scale(.96)}
+input{
+ padding:14px;border:2px solid #e9b7c9;border-radius:20px;
+ text-align:center;font-size:17px;width:85%;max-width:280px;
+ color:#854b62;background:white;margin:12px;
+}
+.card{
+ background:#ffffffc9;border-radius:25px;padding:25px;
+ max-width:440px;width:100%;box-shadow:0 10px 30px #a85c7420;
+ margin:12px auto;
+}
+.heart{font-size:55px;animation:beat 1.2s infinite}
+@keyframes beat{50%{transform:scale(1.18)}}
+.small{font-size:13px}
+.hidden{display:none!important}
+.photos{
+ display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+.photos img{
+ width:100%;height:155px;object-fit:cover;border-radius:15px;
+ background:#f6dce6;
+}
+.envelope{
+ font-size:90px;cursor:pointer;animation:float 2s infinite;
+}
+@keyframes float{50%{transform:translateY(-12px)}}
+.cat{font-size:95px;cursor:pointer;user-select:none}
+#hearts{
+ position:fixed;pointer-events:none;inset:0;overflow:hidden;
+ z-index:5;
+}
+.floating{
+ position:absolute;bottom:-30px;animation:rise 4s linear forwards;
+}
+@keyframes rise{
+ to{transform:translateY(-110vh) rotate(30deg);opacity:0}
+}
+.answer{display:block;width:100%;background:#f5dce6;color:#854b62}
+footer{padding:20px;font-size:13px}
+</style>
+</head>
+<body>
+<div id="hearts"></div>
+
+<!-- SECRET CODE -->
+<section id="lock" class="active">
+ <div class="heart">🔐</div>
+ <p>A little secret world awaits...</p>
+ <h1>Only for you</h1>
+ <div class="card">
+  <p>Enter our secret word 💗</p>
+  <input id="password" placeholder="Our secret..." autocomplete="off">
+  <br>
+  <button onclick="unlock()">Unlock my surprise ❤️</button>
+  <p id="lockMessage" class="small"></p>
+ </div>
+</section>
+
+<!-- WELCOME -->
+<section id="welcome">
+ <div class="heart">🎀</div>
+ <p>A special little world made just for you</p>
+ <h1>My Patatina ❤️</h1>
+ <h2>Happy Birthday, Chrizza!</h2>
+ <p>Welcome to your own little magical world.</p>
+ <button onclick="go('gallery')">Let's begin 💕</button>
+</section>
+
+<!-- PHOTOS -->
+<section id="gallery">
+ <h1>Our little memories 📸</h1>
+ <div class="card">
+  <p>Every picture tells a little part of our story.</p>
+  <div class="photos">
+   <img src="photo1.jpg" alt="Our memory 1">
+   <img src="photo2.jpg" alt="Our memory 2">
+   <img src="photo3.jpg" alt="Our memory 3">
+   <img src="photo4.jpg" alt="Our memory 4">
+   <img src="photo5.jpg" alt="Our memory 5">
+   <img src="photo6.jpg" alt="Our memory 6">
+  </div>
+  <p class="small">Our favourite moments, forever. ❤️</p>
+ </div>
+ <button onclick="go('envelope')">I have something for you 💌</button>
+</section>
+
+<!-- LETTER -->
+<section id="envelope">
+ <h2>You received a letter!</h2>
+ <p>Someone wrote something special for you...</p>
+ <div class="envelope" onclick="openLetter()">💌</div>
+ <p>Tap the envelope to open it</p>
+ <div id="letter" class="card hidden">
+  <h2>My Dearest Chrizza, ❤️</h2>
+  <p>
+   Happy Birthday, my love!
+   <br><br>
+   I wish I could be beside you today, hold your hand
+   and see your beautiful smile.
+   <br><br>
+   Even though thousands of kilometers separate us,
+   you are always close to my heart.
+   <br><br>
+   Every conversation, every laugh and every little
+   moment with you makes my life more beautiful.
+   <br><br>
+   I hope this new chapter brings you happiness,
+   wonderful memories and all the things you dream of.
+   <br><br>
+   I cannot wait until the day I can celebrate
+   your birthday right next to you.
+   <br><br>
+   You are my favourite person, my princess,
+   and my sweetest Patatina.
+   <br><br>
+   I love you so much. ❤️
+  </p>
+  <h2>Forever yours 💗</h2>
+  <button onclick="go('cat')">Continue, princess 🌸</button>
+ </div>
+</section>
+
+<!-- CAT GAME -->
+<section id="cat">
+ <h1>Meet your little kitty 🐱</h1>
+ <div class="card">
+  <div class="cat" onclick="petCat()">🐱</div>
+  <h2 id="catName">Mochi</h2>
+  <p id="catMessage">Meow! I'm waiting for some love!</p>
+  <p>Happiness: <span id="happiness">0</span> 💕</p>
+  <button onclick="petCat()">Pet the kitty 🥰</button>
+  <button onclick="feedCat()">Give it a treat 🐟</button>
+ </div>
+ <button onclick="go('quiz')">Next surprise ✨</button>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+ <h1>How well do you know us? 💕</h1>
+ <div class="card">
+  <h2 id="question">Question 1</h2>
+  <div id="answers"></div>
+  <p id="quizFeedback"></p>
+  <p id="quizProgress">1 / 3</p>
+ </div>
+ <button id="nextQuestion" class="hidden" onclick="nextQuiz()">Next question ❤️</button>
+</section>
+
+<!-- DATE GAME -->
+<section id="dategame">
+ <h1>One special date 📅</h1>
+ <div class="card">
+  <div class="heart">💗</div>
+  <p>When did our love story officially begin?</p>
+  <p class="small">Enter the date in DD/MM/YYYY format.</p>
+  <input id="dateAnswer" placeholder="DD/MM/YYYY">
+  <br>
+  <button onclick="checkDate()">Submit my answer</button>
+  <p id="dateFeedback"></p>
+ </div>
+ <button onclick="go('lany')">One more thing 🎵</button>
+</section>
+
+<!-- LANY -->
+<section id="lany">
+ <div class="heart">🎧</div>
+ <h1>A little music for you</h1>
+ <div class="card">
+  <p>I know how much you love LANY!</p>
+  <p>So here's a little musical surprise, just for you. ❤️</p>
+  <button onclick="window.open('https://www.youtube.com/results?search_query=LANY+official+music','_blank')">
+   Listen to LANY on YouTube 🎶
+  </button>
+ </div>
+ <button onclick="go('final')">The final surprise ✨</button>
+</section>
+
+<!-- FINAL -->
+<section id="final">
+ <div class="heart">❤️</div>
+ <h1>Happy Birthday, my love!</h1>
+ <div class="card">
+  <h2>My beautiful Chrizza 🎀</h2>
+  <p>
+   If I could give you one thing in this world,
+   it would be the ability to see yourself through my eyes.
+   <br><br>
+   Then you would know just how special you are to me.
+   <br><br>
+   No distance, no matter how big, can change what I feel.
+  </p>
+  <h1>I LOVE YOU! 💗</h1>
+  <p>Today, tomorrow and always.</p>
+  <div class="heart">🧸</div>
+  <p>Forever your boy ❤️</p>
+ </div>
+ <button onclick="celebrate()">Send me more hearts! 💕</button>
+ <footer>Made with love, especially for Chrizza.</footer>
+</section>
+
+<script>
+// SECRET WORD
+const SECRET = "PATATINA";
+
+// IMPORTANT: Replace with your real anniversary date.
+const OUR_DATE = "DD/MM/YYYY";
+
+function go(id){
+ document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo(0,0);
+}
+function unlock(){
+ const value=document.getElementById("password").value.trim().toUpperCase();
+ if(value===SECRET){
+  go("welcome");
+  celebrate();
+ }else{
+  document.getElementById("lockMessage").textContent="Oops! Try our secret word again 💗";
+ }
+}
+document.getElementById("password").addEventListener("keydown",e=>{
+ if(e.key==="Enter")unlock();
+});
+
+// LETTER
+function openLetter(){
+ document.getElementById("letter").classList.remove("hidden");
+ celebrate();
+}
+
+// KITTY
+let happiness=0;
+function petCat(){
+ happiness+=1;
+ document.getElementById("happiness").textContent=happiness;
+ document.getElementById("catMessage").textContent=
+ ["Purr... I love you! 😻","Meow meow! More cuddles! 💕",
+ "You are my favourite human! 🥰"][happiness%3];
+ celebrate();
+}
+function feedCat(){
+ happiness+=5;
+ document.getElementById("happiness").textContent=happiness;
+ document.getElementById("catMessage").textContent="Yummy! Thank you! 🐟😽";
+}
+
+// QUIZ
+const questions=[
+ {q:"Where did our story begin?",a:["OmeTV","At school","At a restaurant"],correct:0},
+ {q:"What do we love doing together every day?",a:["Talking and video calling","Playing football","Going shopping"],correct:0},
+ {q:"What are we waiting for the most?",a:["Our time together","A new phone","A holiday alone"],correct:0}
+];
+let qIndex=0,score=0,answered=false;
+function renderQuiz(){
+ const q=questions[qIndex];
+ document.getElementById("question").textContent=q.q;
+ document.getElementById("quizProgress").textContent=(qIndex+1)+" / 3";
+ document.getElementById("quizFeedback").textContent="";
+ document.getElementById("nextQuestion").classList.add("hidden");
+ answered=false;
+ document.getElementById("answers").innerHTML="";
+ q.a.forEach((a,i)=>{
+  const b=document.createElement("button");
+  b.className="answer";
+  b.textContent=a;
+  b.onclick=()=>answerQuiz(i);
+  document.getElementById("answers").appendChild(b);
+ });
+}
+function answerQuiz(i){
+ if(answered)return;
+ answered=true;
+ const correct=questions[qIndex].correct;
+ if(i===correct){
+  score++;
+  document.getElementById("quizFeedback").textContent="Correct! You know us so well! ❤️";
+ }else{
+  document.getElementById("quizFeedback").textContent="Aww! The answer is: "+questions[qIndex].a[correct]+" 💕";
+ }
+ document.getElementById("nextQuestion").classList.remove("hidden");
+}
+function nextQuiz(){
+ qIndex++;
+ if(qIndex<questions.length)renderQuiz();
+ else{
+  document.getElementById("question").textContent="You scored "+score+" / 3! ❤️";
+  document.getElementById("answers").innerHTML="Our story is special!";
+  document.getElementById("quizProgress").textContent="Well done, princess!";
+  document.getElementById("nextQuestion").classList.add("hidden");
+  const b=document.createElement("button");
+  b.textContent="Next game 📅";
+  b.onclick=()=>go("dategame");
+  document.getElementById("answers").appendChild(b);
+ }
+}
+renderQuiz();
+
+// SPECIAL DATE
+function checkDate(){
+ const entered=document.getElementById("dateAnswer").value.trim();
+ const feedback=document.getElementById("dateFeedback");
+ if(OUR_DATE==="DD/MM/YYYY"){
+  feedback.textContent="Our special date needs to be added by my boy first! ❤️";
+ }else if(entered===OUR_DATE){
+  feedback.textContent="YES! You remembered our special day! 💗";
+  celebrate();
+ }else{
+  feedback.textContent="Not quite, princess. Try again! 🥰";
+ }
+}
+
+// HEART ANIMATION
+function celebrate(){
+ const box=document.getElementById("hearts");
+ for(let i=0;i<12;i++){
+  const el=document.createElement("span");
+  el.className="floating";
+  el.textContent=["❤️","💕","💗","✨","🌸"][Math.floor(Math.random()*5)];
+  el.style.left=Math.random()*100+"%";
+  el.style.fontSize=(18+Math.random()*22)+"px";
+  el.style.animationDuration=(3+Math.random()*2)+"s";
+  box.appendChild(el);
+  setTimeout(()=>el.remove(),5000);
+ }
+}
+</script>
+</body>
+</html>
