@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +42,7 @@ input{
  display:grid;grid-template-columns:1fr 1fr;gap:12px;
 }
 .photos img{
- width:100%;height:155px;object-fit:cover;border-radius:15px;
+ width:100%;height:155px;object-fit:contain;border-radius:15px;
  background:#f6dce6;
 }
 .envelope{
@@ -151,7 +150,7 @@ footer{padding:20px;font-size:13px}
  <h1>Meet your little kitty 🐱</h1>
  <div class="card">
   <div class="cat" onclick="petCat()">🐱</div>
-  <h2 id="catName">Mochi</h2>
+  <h2 id="catName">Totoro</h2>
   <p id="catMessage">Meow! I'm waiting for some love!</p>
   <p>Happiness: <span id="happiness">0</span> 💕</p>
   <button onclick="petCat()">Pet the kitty 🥰</button>
@@ -167,7 +166,7 @@ footer{padding:20px;font-size:13px}
   <h2 id="question">Question 1</h2>
   <div id="answers"></div>
   <p id="quizFeedback"></p>
-  <p id="quizProgress">1 / 3</p>
+  <p id="quizProgress">1 / 5</p>
  </div>
  <button id="nextQuestion" class="hidden" onclick="nextQuiz()">Next question ❤️</button>
 </section>
@@ -275,13 +274,17 @@ function feedCat(){
 const questions=[
  {q:"Where did our story begin?",a:["OmeTV","At school","At a restaurant"],correct:0},
  {q:"What do we love doing together every day?",a:["Talking and video calling","Playing football","Going shopping"],correct:0},
- {q:"What are we waiting for the most?",a:["Our time together","A new phone","A holiday alone"],correct:0}
+ {q:"What are we waiting for the most?",a:["Our time together","A new phone","A holiday alone"],correct:0},
+ {q:"Who is better at Brawl Stars?",a:["Chrizza","Stefano 😎","Neither of us"],correct:1},
+ {q:"Who is the most beautiful girl in the world?",a:["Me ❤️","Someone else","I don't know"],correct:0}
 ];
+
 let qIndex=0,score=0,answered=false;
+
 function renderQuiz(){
  const q=questions[qIndex];
  document.getElementById("question").textContent=q.q;
- document.getElementById("quizProgress").textContent=(qIndex+1)+" / 3";
+ document.getElementById("quizProgress").textContent=(qIndex+1)+" / "+questions.length;
  document.getElementById("quizFeedback").textContent="";
  document.getElementById("nextQuestion").classList.add("hidden");
  answered=false;
@@ -294,26 +297,40 @@ function renderQuiz(){
   document.getElementById("answers").appendChild(b);
  });
 }
+
 function answerQuiz(i){
  if(answered)return;
- answered=true;
+
  const correct=questions[qIndex].correct;
+
  if(i===correct){
+  answered=true;
   score++;
-  document.getElementById("quizFeedback").textContent="Correct! You know us so well! ❤️";
+  document.getElementById("quizFeedback").textContent=
+   qIndex===3
+   ? "Of course! Stefano is the Brawl Stars champion! 😎❤️"
+   : qIndex===4
+   ? "Correct! There is no girl more beautiful than you! ❤️"
+   : "Correct! You know us so well! ❤️";
+
+  document.getElementById("nextQuestion").classList.remove("hidden");
  }else{
-  document.getElementById("quizFeedback").textContent="Aww! The answer is: "+questions[qIndex].a[correct]+" 💕";
+  document.getElementById("quizFeedback").textContent=
+   "Nope! Try again, princess! 😂💕";
  }
- document.getElementById("nextQuestion").classList.remove("hidden");
 }
+
 function nextQuiz(){
  qIndex++;
- if(qIndex<questions.length)renderQuiz();
- else{
-  document.getElementById("question").textContent="You scored "+score+" / 3! ❤️";
+
+ if(qIndex<questions.length){
+  renderQuiz();
+ }else{
+  document.getElementById("question").textContent="You scored "+score+" / "+questions.length+"! ❤️";
   document.getElementById("answers").innerHTML="Our story is special!";
   document.getElementById("quizProgress").textContent="Well done, princess!";
   document.getElementById("nextQuestion").classList.add("hidden");
+
   const b=document.createElement("button");
   b.textContent="Next game 📅";
   b.onclick=()=>go("dategame");
